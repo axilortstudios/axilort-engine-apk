@@ -25,12 +25,38 @@ jobs:
         with:
           gradle-version: '8.10'
 
-      - name: Build debug APK
-        run: gradle -p android assembleDebug --no-daemon
+      - name: Create release signing key
+        working-directory: android
+        env:
+          AXILORT_KEYSTORE_PASSWORD: ${{ secrets.AXILORT_KEYSTORE_PASSWORD }}
+          AXILORT_KEY_PASSWORD: ${{ secrets.AXILORT_KEY_PASSWORD }}
+        run: |
+          STORE_PASSWORD="${AXILORT_KEYSTORE_PASSWORD:-AxilortRelease2026!}"
+          KEY_PASSWORD="${AXILORT_KEY_PASSWORD:-AxilortRelease2026!}"
+          export AXILORT_KEYSTORE_PASSWORD="$STORE_PASSWORD"
+          export AXILORT_KEY_PASSWORD="$KEY_PASSWORD"
+          echo "AXILORT_KEYSTORE_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
+          echo "AXILORT_KEY_PASSWORD=$KEY_PASSWORD" >> "$GITHUB_ENV"
+          echo "AXILORT_KEY_ALIAS=axilort" >> "$GITHUB_ENV"
+          keytool -genkeypair -v \
+            -keystore release-keystore.jks \
+            -storepass "$STORE_PASSWORD" \
+            -keypass "$KEY_PASSWORD" \
+            -alias axilort \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Axilort Engine, OU=Axilort Studios, O=Axilort Studios, L=Bikaner, ST=Rajasthan, C=IN"
 
-      - name: Upload APK
+      - name: Build signed release APK
+        run: gradle -p android assembleRelease --no-daemon
+
+      - name: Rename release APK
+        run: cp android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/Axilort-Engine-release.apk
+
+      - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
-          name: Axilort-Engine-debug-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: Axilort-Engine-release-APK
+          path: android/app/build/outputs/apk/release/Axilort-Engine-release.apk
           if-no-files-found: error
