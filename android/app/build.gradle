@@ -1,7 +1,33 @@
 plugins { id 'com.android.application' }
 
-android { namespace 'com.axilort.engine'; compileSdk 35
-    defaultConfig { applicationId 'com.axilort.engine'; minSdk 23; targetSdk 35; versionCode 1; versionName '1.0' }
+android {
+    namespace 'com.axilort.engine'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.axilort.engine'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    signingConfigs {
+        release {
+            storeFile rootProject.file('release-keystore.jks')
+            storePassword System.getenv('AXILORT_KEYSTORE_PASSWORD')
+            keyAlias System.getenv('AXILORT_KEY_ALIAS')
+            keyPassword System.getenv('AXILORT_KEY_PASSWORD')
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
 }
 
 tasks.register('copyWebApp', Copy) {
