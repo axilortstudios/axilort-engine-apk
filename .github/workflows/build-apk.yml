@@ -33,8 +33,6 @@ jobs:
         run: |
           STORE_PASSWORD="${AXILORT_KEYSTORE_PASSWORD:-AxilortRelease2026!}"
           KEY_PASSWORD="${AXILORT_KEY_PASSWORD:-AxilortRelease2026!}"
-          export AXILORT_KEYSTORE_PASSWORD="$STORE_PASSWORD"
-          export AXILORT_KEY_PASSWORD="$KEY_PASSWORD"
           echo "AXILORT_KEYSTORE_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
           echo "AXILORT_KEY_PASSWORD=$KEY_PASSWORD" >> "$GITHUB_ENV"
           echo "AXILORT_KEY_ALIAS=axilort" >> "$GITHUB_ENV"
