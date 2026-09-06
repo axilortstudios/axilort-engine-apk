@@ -3,6 +3,7 @@ package com.axilort.engine;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import java.io.InputStream;
 
 public class MainActivity extends Activity {
     private WebView webView;
@@ -74,7 +76,11 @@ public class MainActivity extends Activity {
         box.setBackgroundColor(Color.rgb(5,5,5));
 
         ImageView logo = new ImageView(this);
-        logo.setImageResource(com.axilort.engine.R.drawable.axilort_real_logo);
+        try (InputStream input = getAssets().open("images/logo.png")) {
+            logo.setImageBitmap(BitmapFactory.decodeStream(input));
+        } catch (Exception ignored) {
+            logo.setImageResource(com.axilort.engine.R.drawable.axilort_logo);
+        }
         logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, 180);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
