@@ -11,6 +11,12 @@ tasks.register('copyWebApp', Copy) {
     into(layout.buildDirectory.dir('generated/webapp'))
 }
 
-preBuild.dependsOn(copyWebApp)
+tasks.register('copyLauncherLogo', Copy) {
+    from(rootProject.projectDir.parentFile.toPath().resolve('images/logo.png'))
+    into(layout.projectDirectory.dir('src/main/res/drawable'))
+    rename { 'axilort_launcher_logo.png' }
+}
+
+preBuild.dependsOn(copyWebApp, copyLauncherLogo)
 
 android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/webapp'))
