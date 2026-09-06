@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
         box.setBackgroundColor(Color.rgb(5,5,5));
 
         ImageView logo = new ImageView(this);
-        logo.setImageResource(com.axilort.engine.R.drawable.axilort_logo);
+        logo.setImageResource(com.axilort.engine.R.drawable.axilort_real_logo);
         logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, 180);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
