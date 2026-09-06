@@ -1,131 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#050505">
-<meta name="description" content="Axilort Engine assets.">
-<title>Axilort Assets</title>
-<style>
-:root{--bg:#050505;--panel:#0b0b0c;--border:#242426;--border2:#18181a;--text:#f2f2f3;--muted:#929297;--red:#ff2028}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-a,button,input,select{font:inherit;color:inherit;touch-action:manipulation}
-a{text-decoration:none}button{cursor:pointer}
-.app{position:fixed;inset:0;width:100vw;height:100vh;display:flex;overflow:hidden;background:#050505}
-@media(orientation:portrait){.app{width:100vh;height:100vw;left:50%;top:50%;right:auto;bottom:auto;inset-inline:auto;inset-block:auto;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center center}}
-.sidebar{width:clamp(94px,15vw,205px);flex:0 0 clamp(94px,15vw,205px);border-right:1px solid var(--border2);background:linear-gradient(180deg,#070708,#050505);padding:clamp(7px,1.25vw,20px) clamp(6px,1vw,15px);display:flex;flex-direction:column;z-index:3}
-.brand{display:flex;align-items:center;justify-content:center;padding:0 0 clamp(9px,1.5vw,22px)}
-.brand img{width:clamp(35px,5vw,80px);height:clamp(35px,5vw,80px);object-fit:contain;flex:none}.brand-text{display:none}
-.nav{display:flex;flex-direction:column;gap:clamp(2px,.4vw,6px)}
-.nav a{border:1px solid transparent;background:transparent;border-radius:clamp(7px,1vw,12px);height:clamp(31px,4vw,50px);display:flex;align-items:center;gap:clamp(5px,.8vw,12px);padding:0 clamp(6px,.9vw,13px);font-weight:600;font-size:clamp(8px,1.05vw,14px);color:#ccc;text-align:left;cursor:pointer;white-space:nowrap}
-.nav a:hover{background:#101011}.nav a.active{background:linear-gradient(90deg,rgba(255,32,40,.15),rgba(255,32,40,.055));border-color:#8e161b;color:#fff;box-shadow:inset 2px 0 0 var(--red)}
-.ico{width:clamp(14px,1.7vw,21px);height:clamp(14px,1.7vw,21px);display:grid;place-items:center;color:#eee;flex:0 0 auto;font-size:clamp(11px,1.35vw,18px)}.active .ico{color:var(--red)}
-.version{margin-top:auto;padding:clamp(7px,1vw,13px) clamp(6px,.8vw,11px);color:#66666b;font-size:clamp(7px,.8vw,10px);font-weight:600;text-align:center;white-space:nowrap}
-.main{min-width:0;flex:1;display:flex;flex-direction:column}.topbar{height:clamp(39px,5.5vw,68px);flex:0 0 clamp(39px,5.5vw,68px);display:flex;align-items:center;justify-content:flex-end;padding:0 clamp(8px,1.7vw,24px)}
-.top-action{width:clamp(28px,3.8vw,42px);height:clamp(28px,3.8vw,42px);border:0;border-radius:9px;background:transparent;display:grid;place-items:center;cursor:pointer}.top-action:hover{background:#111112}.gear{font-size:clamp(17px,2.25vw,25px);line-height:1;color:#ededee}
-.content{padding:clamp(8px,1.7vw,25px) clamp(10px,2vw,28px) clamp(8px,1.7vw,24px);overflow:auto;height:100%;scrollbar-width:thin;scrollbar-color:#29292b transparent}
-.welcome{margin-bottom:clamp(7px,1.15vw,17px)}.welcome h1{font-size:clamp(15px,2.55vw,27px);line-height:1.1;margin:0;font-weight:800;letter-spacing:-.035em}.welcome h1 span{color:var(--red)}.welcome p{margin:3px 0 0;color:#929297;font-size:clamp(7px,1.05vw,13px)}
-.panel{border:1px solid var(--border);border-radius:clamp(9px,1.5vw,17px);background:linear-gradient(145deg,#0c0c0d,#080809);overflow:visible}
-.panel-head{min-height:clamp(42px,5vw,60px);padding:clamp(8px,1.2vw,14px) clamp(10px,1.5vw,18px);display:flex;align-items:center;gap:clamp(7px,1vw,12px);border-bottom:1px solid var(--border2)}
-.panel-head h2{font-size:clamp(10px,1.55vw,17px);margin:0;letter-spacing:-.02em;white-space:nowrap}.path{flex:1;min-width:0;color:var(--muted);font-size:clamp(7px,1vw,12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.btn,.primary{height:clamp(30px,3.6vw,39px);border:1px solid #29292d;border-radius:8px;background:#111;padding:0 clamp(9px,1.2vw,15px);font-size:clamp(8px,1vw,12px);font-weight:750}.primary{border-color:#ff3b42;background:linear-gradient(180deg,#ff3038,#d9151c);box-shadow:0 6px 18px rgba(255,32,40,.14)}.btn:hover{background:#171718;border-color:#3b3b40}
-.searchrow{display:flex;gap:7px;padding:clamp(9px,1.2vw,14px);border-bottom:1px solid var(--border2)}.search{height:clamp(31px,3.7vw,40px);min-width:0;flex:1;border:1px solid #29292d;border-radius:8px;background:#09090a;padding:0 clamp(9px,1.2vw,15px);outline:0;font-size:clamp(8px,1vw,12px)}.search:focus{border-color:#8e161b}.select{height:clamp(31px,3.7vw,40px);border:1px solid #29292d;border-radius:8px;background:#09090a;padding:0 clamp(8px,1vw,12px);font-size:clamp(8px,1vw,12px)}
-.list{padding:clamp(9px,1.3vw,15px);display:grid;grid-template-columns:1fr;gap:clamp(5px,.8vw,9px)}.list.grid{grid-template-columns:repeat(auto-fill,minmax(clamp(145px,15vw,205px),1fr))}
-.item{position:relative;min-height:clamp(58px,6.5vw,78px);border:1px solid var(--border);border-radius:clamp(9px,1.2vw,14px);background:linear-gradient(145deg,#0d0d0e,#080809);display:flex;align-items:center;gap:clamp(8px,1.1vw,13px);padding:clamp(8px,1vw,11px);user-select:none;transition:.15s}.item:hover{border-color:#8e161b;background:#101011;transform:translateY(-1px)}
-.item:focus{outline:1px solid #8e161b;outline-offset:1px}.icon{width:clamp(37px,3.9vw,47px);height:clamp(37px,3.9vw,47px);flex:none;border:1px solid #29292d;border-radius:11px;background:#0a0a0b;display:grid;place-items:center;color:var(--red);font-size:clamp(9px,1vw,13px);font-weight:850}.info{min-width:0;flex:1}.info b{display:block;font-size:clamp(10px,1.15vw,14px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.info small{display:block;margin-top:4px;color:#68686e;font-size:clamp(8px,.9vw,11px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.more{width:clamp(29px,3vw,36px);height:clamp(30px,3.1vw,37px);flex:none;border:0;background:transparent;border-radius:7px;color:#aaa;font-size:22px}.more:hover{background:#171718;color:#fff}.menu{position:absolute;right:9px;top:calc(100% - 1px);z-index:20;min-width:180px;padding:5px;border:1px solid #303034;border-radius:10px;background:#0b0b0c;box-shadow:0 20px 60px #000;display:none}.menu.show{display:block}.menu button{display:block;width:100%;height:38px;text-align:left;border:0;border-radius:6px;background:transparent;padding:0 10px;font-size:12px}.menu button:hover{background:#171718}
-.empty{min-height:clamp(120px,16vw,210px);padding:clamp(20px,3vw,35px) 15px;text-align:center;color:#777;font-size:clamp(8px,1vw,12px);display:flex;flex-direction:column;align-items:center;justify-content:center}.empty b{color:#ddd;margin-bottom:4px}.empty-icon{width:clamp(26px,3.2vw,40px);height:clamp(26px,3.2vw,40px);border:1px solid #2a2a2d;border-radius:8px;display:grid;place-items:center;color:#777;margin-bottom:6px;font-size:clamp(10px,1.3vw,15px)}
-.hidden{display:none!important}.toast{position:fixed;z-index:500;left:50%;bottom:22px;transform:translate(-50%,18px);opacity:0;background:#111;border:1px solid #333;border-radius:9px;padding:10px 14px;font-size:10px;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-.modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(10px)}.modal.show{display:flex}.dialog{width:min(520px,92vw);border:1px solid #303034;border-radius:18px;background:linear-gradient(145deg,#121214,#080809);box-shadow:0 30px 100px rgba(0,0,0,.8);overflow:hidden;animation:pop .16s ease-out}@keyframes pop{from{opacity:0;transform:scale(.97) translateY(6px)}to{opacity:1;transform:none}}.dialog-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--border2)}.dialog-icon{width:46px;height:46px;border-radius:12px;border:1px solid #3a3a3d;background:#0a0a0b;display:grid;place-items:center;color:var(--red);font-weight:850}.dialog-title{min-width:0;flex:1}.dialog-title b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dialog-title small{display:block;margin-top:3px;color:#777;font-size:11px}.close{width:36px;height:36px;border:0;border-radius:9px;background:transparent;color:#aaa;font-size:22px}.close:hover{background:#1a1a1c;color:#fff}.details{padding:8px 20px 16px}.detail{display:flex;gap:18px;justify-content:space-between;padding:13px 0;border-bottom:1px solid #171719}.detail:last-child{border-bottom:0}.detail span:first-child{color:#777;font-size:11px}.detail span:last-child{max-width:65%;text-align:right;color:#eee;font-size:12px;word-break:break-word}.dialog-foot{padding:14px 20px;border-top:1px solid var(--border2);display:flex;justify-content:flex-end}.dialog-foot .btn{min-width:86px}
-@media(max-height:360px){.sidebar{width:clamp(86px,16vw,145px);flex-basis:clamp(86px,16vw,145px)}.nav a{height:29px}.brand img{width:34px;height:34px}.content{padding:7px 9px}.searchrow{padding:7px}.list{padding:7px}.item{min-height:52px}.empty{min-height:90px}}
-@media(max-width:600px) and (orientation:landscape){.sidebar{width:100px;flex-basis:100px}.brand img{width:34px;height:34px}.nav a{height:30px;font-size:8px;gap:5px;padding:0 6px}.version{font-size:7px}.topbar{height:38px;flex-basis:38px}.content{padding:7px 9px}.welcome{margin-bottom:7px}.welcome h1{font-size:19px}.welcome p{font-size:8px}.panel-head{min-height:43px;padding:6px 8px}.panel-head h2{font-size:11px}.path{font-size:8px}.btn,.primary{height:29px;font-size:8px}.searchrow{padding:8px}.search,.select{height:29px;font-size:8px}.list{padding:8px;gap:5px}.item{min-height:46px;padding:6px}.icon{width:29px;height:29px;font-size:7px}.info b{font-size:8px}.info small{font-size:6px}.more{width:25px;height:27px}.empty{min-height:100px;font-size:8px}.dialog{width:min(420px,88vw)}.dialog-head{padding:12px 14px}.details{padding:4px 14px 10px}.dialog-foot{padding:10px 14px}}
-</style>
-</head>
-<body>
-<div class="app">
-<aside class="sidebar">
-<div class="brand"><img src="images/logo.png" alt="Axilort Engine"></div>
-<nav class="nav" aria-label="Engine navigation">
-<a href="home.html"><span class="ico">⌂</span>Home</a>
-<a href="projects.html"><span class="ico">□</span>Projects</a>
-<a class="active" href="assets.html"><span class="ico">◇</span>Assets</a>
-<a href="settings.html"><span class="ico">⚙</span>Settings</a>
-<a href="team.html"><span class="ico">♙</span>Team</a>
-</nav>
-<div class="version">Axilort Engine v1.0.0</div>
-</aside>
-<main class="main">
-<header class="topbar"><a class="top-action" href="settings.html" aria-label="Open settings"><span class="gear">⚙</span></a></header>
-<div class="content">
-<div class="welcome"><h1>Axilort <span>Assets</span></h1><p>Manage your projects, files and game assets.</p></div>
-<section class="panel">
-<div class="panel-head"><h2 id="heading">Projects</h2><div class="path" id="path">axilort-engine-data/projects/</div><div class="actions" id="actions"></div></div>
-<div class="searchrow"><input class="search" id="search" placeholder="Search files and folders…" autocomplete="off"><select class="select" id="sort" aria-label="Sort"><option value="name">Name</option><option value="size">Size</option><option value="type">Type</option></select><button class="btn" id="view">▦ Grid</button></div>
-<div class="list" id="list"></div>
-</section>
-</div>
-</main>
-</div>
-<input id="upload" type="file" multiple class="hidden">
-<div class="toast" id="toast"></div>
-<div class="modal" id="detailModal" role="dialog" aria-modal="true">
-<div class="dialog">
-<div class="dialog-head"><div class="dialog-icon" id="detailIcon">FILE</div><div class="dialog-title"><b id="detailName">Details</b><small id="detailType">Asset information</small></div><button class="close" id="closeDetail" aria-label="Close">×</button></div>
-<div class="details"><div class="detail"><span>Location</span><span id="detailPath">—</span></div><div class="detail"><span>Type</span><span id="detailKind">—</span></div><div class="detail"><span>Size</span><span id="detailSize">—</span></div><div class="detail"><span>Storage</span><span id="detailSource">—</span></div></div>
-<div class="dialog-foot"><button class="btn" id="detailDone">Close</button></div>
-</div>
-</div>
-<script>
-const DEVICE_ROOT='axilort-engine-data',PROJECT_ROOT='axilort-engine-data/projects';
-let currentPath='',cache=[],grid=false;
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const ext=n=>{let a=String(n||'').toLowerCase().split('.');return a.length>1?a.pop():''};
-const bytes=n=>{if(!n)return'0 B';if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';if(n<1073741824)return(n/1048576).toFixed(1)+' MB';return(n/1073741824).toFixed(1)+' GB'};
-const native=()=>window.AxilortStorage&&typeof window.AxilortStorage.list==='function';
-const toast=s=>{let t=$('toast');t.textContent=s;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),2200)};
-const isDir=x=>x?.type==='dir'||x?.kind==='folder'||x?.kind==='project'||x?.isDirectory===true;
-const fullPath=x=>x.path||((currentPath?PROJECT_ROOT+'/'+currentPath:PROJECT_ROOT)+'/'+x.name);
-const iconText=x=>isDir(x)?'▰':ext(x.name).toUpperCase().slice(0,4)||'FILE';
-function row(x){return '<div class="item" tabindex="0" data-path="'+esc(x.path||'')+'" data-name="'+esc(x.name)+'" data-dir="'+(isDir(x)?'1':'0')+'"><div class="icon">'+iconText(x)+'</div><div class="info"><b>'+esc(x.name)+'</b><small>'+(isDir(x)?'Folder':(x.size?bytes(x.size):'File'))+'</small></div><button class="more" aria-label="More">⋮</button><div class="menu"><button data-a="open">Open</button><button data-a="export">Export</button><button data-a="details">Details</button></div></div>'}
-async function listFolder(path){let result=await window.AxilortStorage.list(path);return Array.isArray(result)?result:[]}
-async function render(){
-try{
-if(!native())throw Error('Device storage is unavailable.');
-let path=currentPath?PROJECT_ROOT+'/'+currentPath:PROJECT_ROOT;
-cache=await listFolder(path);
-$('heading').textContent=currentPath.split('/').filter(Boolean).pop()||'Projects';
-$('path').textContent=path+'/';
-$('actions').innerHTML=currentPath?'<button class="btn" id="back">← Back</button>':'';
-$('actions').innerHTML+='<button class="btn" id="folder">+ Folder</button><button class="btn" id="file">+ File</button><button class="primary" id="uploadBtn">Upload</button>';
-$('back')?.addEventListener('click',()=>{currentPath=currentPath.split('/').slice(0,-1).join('/');render()});
-$('folder').onclick=()=>createNative('folder');$('file').onclick=()=>createNative('file');$('uploadBtn').onclick=()=>$('upload').click();
-renderList();
-}catch(e){$('list').innerHTML='<div class="empty"><div class="empty-icon">!</div><b>Storage unavailable</b><span>'+esc(e.message||e)+'</span></div>'}
-}
-function renderList(){
-let a=cache.slice(),q=$('search').value.trim().toLowerCase();
-if(q)a=a.filter(x=>String(x.name).toLowerCase().includes(q));
-let s=$('sort').value;
-a.sort((x,y)=>s==='size'?(y.size||0)-(x.size||0):s==='type'?String(x.type||x.kind||'').localeCompare(String(y.type||y.kind||'')):String(x.name||'').localeCompare(String(y.name||'')));
-$('list').classList.toggle('grid',grid);
-$('list').innerHTML=a.length?a.map(row).join(''):'<div class="empty"><div class="empty-icon">□</div><b>'+(!currentPath?'No projects':'Folder is empty')+'</b><span>'+(!currentPath?'Create your first project to see it here.':'Create or upload assets into this folder.')+'</span></div>';
-}
-async function createNative(kind){let n=prompt('Enter '+kind+' name');if(!n)return;n=n.trim().replace(/[\\/:*?"<>|]/g,'-');if(!n)return;let base=currentPath?PROJECT_ROOT+'/'+currentPath:PROJECT_ROOT;try{if(kind==='folder')await window.AxilortStorage.mkdir(base+'/'+n);else await window.AxilortStorage.write(base+'/'+n,'');toast(kind==='folder'?'Folder created':'File created');await render()}catch(e){toast(e.message||'Unable to create')}}
-async function exportItem(x){if(isDir(x)){toast('Folder cannot be exported');return}try{let d=await window.AxilortStorage.read(fullPath(x));let blob=d instanceof Blob?d:new Blob([d]);let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download=x.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}catch(e){toast(e.message||'Export failed')}}
-function showDetails(x){$('detailIcon').textContent=iconText(x);$('detailName').textContent=x.name;$('detailType').textContent=isDir(x)?'Folder':'File asset';$('detailPath').textContent=fullPath(x);$('detailKind').textContent=isDir(x)?'Folder':(x.type||x.kind||ext(x.name)||'File');$('detailSize').textContent=isDir(x)?'—':bytes(x.size||0);$('detailSource').textContent='Axilort app storage';$('detailModal').classList.add('show')}
-function closeDetails(){$('detailModal').classList.remove('show')}
-async function openItem(x){if(isDir(x)){let p=x.path||x.name;currentPath=p.replace(PROJECT_ROOT+'/','').replace(DEVICE_ROOT+'/','').replace(/^\/+|\/+$/g,'');await render()}else exportItem(x)}
-$('list').onclick=e=>{let m=e.target.closest('.more');if(m){document.querySelectorAll('.menu.show').forEach(x=>x.classList.remove('show'));m.parentElement.querySelector('.menu').classList.add('show');return}let b=e.target.closest('.menu button');if(!b)return;let it=b.closest('.item'),x=cache.find(y=>(y.path||'')===it.dataset.path||y.name===it.dataset.name),a=b.dataset.a;document.querySelectorAll('.menu.show').forEach(y=>y.classList.remove('show'));if(!x)return;if(a==='open')openItem(x);else if(a==='export')exportItem(x);else if(a==='details')showDetails(x)};
-$('list').ondblclick=e=>{let it=e.target.closest('.item');if(!it||e.target.closest('.more')||e.target.closest('.menu'))return;let x=cache.find(y=>(y.path||'')===it.dataset.path||y.name===it.dataset.name);if(x&&isDir(x))openItem(x)};
-$('list').onkeydown=e=>{if(e.key==='Enter'){let it=e.target.closest('.item');if(!it)return;let x=cache.find(y=>(y.path||'')===it.dataset.path||y.name===it.dataset.name);if(x&&isDir(x))openItem(x)}};
-$('upload').onchange=async e=>{if(!currentPath)return;let base=PROJECT_ROOT+'/'+currentPath;try{for(const f of e.target.files)await window.AxilortStorage.write(base+'/'+f.name,new Uint8Array(await f.arrayBuffer()));e.target.value='';toast('Files uploaded');render()}catch(err){toast(err.message||'Upload failed')}};
-$('search').oninput=renderList;$('sort').onchange=renderList;$('view').onclick=()=>{grid=!grid;$('view').textContent=grid?'☷ List':'▦ Grid';renderList()};$('closeDetail').onclick=closeDetails;$('detailDone').onclick=closeDetails;$('detailModal').onclick=e=>{if(e.target===$('detailModal'))closeDetails()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetails()});document.addEventListener('click',e=>{if(!e.target.closest('.more')&&!e.target.closest('.menu'))document.querySelectorAll('.menu.show').forEach(x=>x.classList.remove('show'))});
-function enterFullscreen(){try{if(!document.fullscreenElement&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch(e){}try{if(screen.orientation?.lock)screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}
-document.addEventListener('pointerdown',enterFullscreen,{once:true,passive:true});
-window.addEventListener('load',async()=>{try{if(native()){await window.AxilortStorage.mkdir(DEVICE_ROOT);await window.AxilortStorage.mkdir(PROJECT_ROOT)}}catch(e){}try{if(screen.orientation?.type?.startsWith('portrait')&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{})}catch(e){}render()});
-</script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#050505"><title>Axilort Assets</title><style>:root{--bg:#050505;--panel:#0b0b0c;--line:#252527;--text:#f2f2f3;--muted:#88888e;--red:#ff2028}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}button,input{font:inherit;color:inherit}button{cursor:pointer}.app{height:100%;display:flex}.side{width:150px;flex:none;border-right:1px solid #18181a;padding:15px 10px;background:#070708}.brand{text-align:center;padding:4px 0 22px}.brand img{width:58px;height:58px;object-fit:contain}.nav a{display:block;text-decoration:none;color:#aaa;padding:11px 10px;border-radius:9px;font-size:12px;margin:3px 0}.nav a:hover,.nav .active{background:#151011;color:#fff}.nav .active{box-shadow:inset 2px 0 #ff2028}.main{min-width:0;flex:1;display:flex;flex-direction:column}.top{height:62px;display:flex;align-items:center;justify-content:flex-end;padding:0 22px}.content{padding:10px 25px 25px;overflow:auto}.title h1{margin:0;font-size:27px}.title h1 span{color:var(--red)}.title p{margin:4px 0 17px;color:var(--muted);font-size:12px}.panel{border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#0d0d0e,#080809);overflow:hidden}.head{min-height:58px;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #19191b}.head h2{font-size:15px;margin:0}.path{flex:1;color:#777;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.actions{display:flex;gap:6px}.btn{height:35px;border:1px solid #303034;background:#111;border-radius:8px;padding:0 12px;font-size:11px}.primary{border-color:#ff4148;background:linear-gradient(#ff3038,#d9151c)}.search{display:flex;gap:7px;padding:10px 14px;border-bottom:1px solid #19191b}.search input{flex:1;min-width:0;height:35px;border:1px solid #29292d;border-radius:8px;background:#09090a;padding:0 10px;outline:0}.list{padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}.item{position:relative;min-height:67px;border:1px solid var(--line);border-radius:11px;background:#0b0b0c;display:flex;align-items:center;gap:10px;padding:9px}.item:hover{border-color:#8e161b}.icon{width:42px;height:42px;flex:none;border:1px solid #29292d;border-radius:10px;display:grid;place-items:center;color:var(--red);font-size:9px;font-weight:800}.info{min-width:0;flex:1}.info b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.info small{display:block;margin-top:4px;color:#68686e;font-size:9px}.more{width:30px;height:32px;border:0;background:transparent;border-radius:7px}.more:hover{background:#171718}.menu{position:absolute;right:8px;top:45px;z-index:5;width:145px;padding:4px;border:1px solid #303034;border-radius:9px;background:#0b0b0c;box-shadow:0 20px 50px #000;display:none}.menu.show{display:block}.menu button{display:block;width:100%;height:32px;border:0;background:transparent;text-align:left;padding:0 9px;font-size:10px;border-radius:5px}.menu button:hover{background:#171718}.empty{grid-column:1/-1;text-align:center;padding:55px 15px;color:#777}.empty b{display:block;color:#ddd;margin-bottom:5px}.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;background:#111;border:1px solid #333;border-radius:9px;padding:10px 14px;font-size:10px;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:600px){.side{width:100px}.nav a{font-size:9px;padding:9px 7px}.brand img{width:38px;height:38px}.content{padding:8px}.top{height:42px}.title h1{font-size:19px}.title p{font-size:8px}.head{min-height:45px;padding:7px}.head h2{font-size:10px}.path{font-size:8px}.btn{height:29px;font-size:8px;padding:0 8px}.search{padding:7px}.search input{height:29px;font-size:8px}.list{padding:7px;grid-template-columns:1fr}.item{min-height:54px}.icon{width:35px;height:35px}.info b{font-size:10px}.info small{font-size:8px}}</style></head><body><div class="app"><aside class="side"><div class="brand"><img src="images/logo.png"></div><nav class="nav"><a href="home.html">⌂ Home</a><a href="projects.html">□ Projects</a><a class="active" href="assets.html">◇ Assets</a><a href="settings.html">⚙ Settings</a><a href="team.html">♙ Team</a></nav></aside><main class="main"><header class="top">⚙</header><div class="content"><div class="title"><h1>Axilort <span>Assets</span></h1><p>File manager for axilort-engine-data/projects/.</p></div><section class="panel"><div class="head"><h2 id="heading">Projects</h2><div class="path" id="path">axilort-engine-data/projects/</div><div class="actions"><button class="btn" onclick="up()">↑ Up</button><button class="btn" onclick="newFolder()">＋ Folder</button><button class="primary btn" onclick="upload()">＋ Upload</button></div></div><div class="search"><input id="q" placeholder="Search files and folders…" oninput="render()"></div><div id="list" class="list"></div></section></div></main></div><input id="file" type="file" multiple style="display:none"><div id="toast" class="toast"></div><script>
+const ROOT='projects';let cwd=ROOT,items=[];const native=typeof AxilortStorage!=='undefined';
+const toast=s=>{let e=document.getElementById('toast');e.textContent=s;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)};
+const clean=p=>String(p||'').replace(/\\/g,'/').replace(/^\/+|\/+$/g,'');const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const js=s=>String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+function getList(){if(native){try{return JSON.parse(AxilortStorage.list(cwd))}catch(e){return[]}}return JSON.parse(localStorage.getItem('axilort-web:'+cwd)||'[]')}
+function refresh(){items=getList();document.getElementById('path').textContent='axilort-engine-data/'+cwd+'/';render()}
+function render(){let q=document.getElementById('q').value.toLowerCase(),a=items.filter(x=>x.name.toLowerCase().includes(q));let l=document.getElementById('list');l.innerHTML='';if(!a.length){l.innerHTML='<div class="empty"><b>Folder is empty</b><span>Create a folder, project, or upload files.</span></div>';return}a.forEach(x=>{let d=document.createElement('div');d.className='item';let p=clean(x.path);d.innerHTML='<div class="icon">'+(x.folder?'DIR':'FILE')+'</div><div class="info"><b>'+esc(x.name)+'</b><small>'+(x.folder?'Folder':size(x.size))+'</small></div><button class="more">⋮</button><div class="menu"><button data-a="rename">Rename</button><button data-a="open">'+(x.folder?'Open':'Read')+'</button><button data-a="download">Download</button><button data-a="delete">Delete</button></div>';d.querySelector('.more').onclick=e=>{e.stopPropagation();document.querySelectorAll('.menu.show').forEach(m=>m.classList.remove('show'));d.querySelector('.menu').classList.toggle('show')};d.querySelectorAll('.menu button').forEach(b=>b.onclick=e=>{e.stopPropagation();let a=b.dataset.a;if(a==='rename')renameItem(p);if(a==='open')openItem(p,x.folder);if(a==='download')downloadItem(p,x.folder);if(a==='delete')deleteItem(p)});d.onclick=e=>{if(e.target.closest('.menu')||e.target.closest('.more'))return;if(x.folder){cwd=p;refresh()}};l.appendChild(d)})}
+function size(n){n=Number(n||0);if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}
+function up(){if(cwd===ROOT)return;cwd=cwd.split('/').slice(0,-1).join('/')||ROOT;refresh()}
+function newFolder(){let n=prompt('Folder name');if(!n)return;let p=clean(cwd+'/'+n);if(native?AxilortStorage.mkdir(p):localMkdir(p)){toast('Folder created');refresh()}else toast('Could not create folder')}
+function localMkdir(p){localStorage.setItem('axilort-web:'+p,'[]');return true}
+function upload(){document.getElementById('file').click()}
+document.getElementById('file').onchange=async e=>{for(const f of e.target.files){let b=await new Promise(r=>{let x=new FileReader();x.onload=()=>r(x.result.split(',')[1]);x.readAsDataURL(f)});let p=clean(cwd+'/'+f.name);if(native)AxilortStorage.writeBase64(p,b);else localStorage.setItem('axilort-file:'+p,b)}e.target.value='';toast('Upload complete');refresh()}
+function renameItem(p){let n=prompt('New name',p.split('/').pop());if(!n)return;let to=p.split('/').slice(0,-1).concat(n).join('/');if(native&&AxilortStorage.rename(p,to)){toast('Renamed');refresh()}else toast('Rename requires native storage')}
+function deleteItem(p){if(!confirm('Delete '+p+'?'))return;if(native&&AxilortStorage.delete(p)){toast('Deleted');refresh()}else toast('Delete failed')}
+function openItem(p,folder){if(folder){cwd=p;refresh();return}if(!native){toast('Open is available in the APK');return}let b=AxilortStorage.readBase64(p);if(!b){toast('Unable to read file');return}let raw=atob(b),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);let text;try{text=new TextDecoder().decode(bytes)}catch(e){text=raw}let w=window.open('','_blank');if(w){w.document.body.style='background:#050505;color:#eee;font-family:monospace;padding:20px';w.document.body.innerText=text}}
+function downloadItem(p,folder){if(folder){toast('Folders cannot be downloaded directly');return}if(!native){toast('Download is available in the APK');return}let b=AxilortStorage.readBase64(p);if(!b)return;let raw=atob(b),u=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)u[i]=raw.charCodeAt(i);let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u]));a.download=p.split('/').pop();a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+refresh();
+</script></body></html>
