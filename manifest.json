@@ -1,0 +1,74 @@
+{
+  "name": "Axilort Engine",
+  "short_name": "Axilort",
+  "description": "Axilort Engine is a professional cross-platform game development environment for creating interactive 2D and 3D experiences.",
+  "lang": "en",
+  "dir": "ltr",
+
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+
+  "theme_color": "#0a0a0a",
+  "background_color": "#0a0a0a",
+
+  "categories": [
+    "development",
+    "games",
+    "utilities"
+  ],
+
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "New Project",
+      "short_name": "New Project",
+      "description": "Create a new Axilort Engine project.",
+      "url": "/?action=new-project",
+      "icons": [
+        {
+          "src": "/icons/new-project.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Open Engine",
+      "short_name": "Open",
+      "description": "Open Axilort Engine.",
+      "url": "/?action=open",
+      "icons": [
+        {
+          "src": "/icons/open.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+
+  "prefer_related_applications": false
+}
