@@ -1,0 +1,16 @@
+plugins { id 'com.android.application' }
+
+android { namespace 'com.axilort.engine'; compileSdk 35
+    defaultConfig { applicationId 'com.axilort.engine'; minSdk 23; targetSdk 35; versionCode 1; versionName '1.0' }
+}
+
+tasks.register('copyWebApp', Copy) {
+    from(rootProject.projectDir.parentFile) {
+        exclude 'android/**', '.git/**', '.github/**'
+    }
+    into(layout.buildDirectory.dir('generated/webapp'))
+}
+
+preBuild.dependsOn(copyWebApp)
+
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/webapp'))
