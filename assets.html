@@ -16,6 +16,13 @@ a,button,input,textarea{font:inherit;color:inherit;touch-action:manipulation}but
 @media(max-height:360px){.sidebar{width:clamp(86px,16vw,145px);flex-basis:clamp(86px,16vw,145px)}.nav a{height:29px}.brand img{width:34px;height:34px}.content{padding:7px 9px}.item{min-height:45px}.modal{max-height:88vh}}
 @media(max-width:600px) and (orientation:landscape){.sidebar{width:100px;flex-basis:100px}.brand img{width:34px;height:34px}.nav a{height:30px;font-size:8px;gap:5px;padding:0 6px}.version{font-size:7px}.topbar{height:38px;flex-basis:38px}.content{padding:7px 9px}.welcome{margin-bottom:7px}.welcome h1{font-size:17px}.welcome p{font-size:8px}.panel-head{min-height:38px;padding:6px}.panel-head h2{font-size:9px}.path{font-size:7px}.btn{height:27px;font-size:7px;padding:0 7px}.search{padding:6px}.search input{height:27px;font-size:8px}.list{padding:6px;grid-template-columns:1fr}.item{min-height:48px;padding:7px}.icon{width:32px;height:32px}.info b{font-size:9px}.info small{font-size:7px}.modal{width:min(410px,90vw)}}
 </style>
+<style>
+/* Professional floating three-dot menu: never clipped by cards, grids, or panels. */
+.menu.ax-floating-menu{position:fixed!important;right:auto!important;top:auto!important;z-index:2147483647!important;width:168px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);overflow-y:auto;overscroll-behavior:contain;padding:5px;border:1px solid #38383d;border-radius:10px;background:rgba(11,11,12,.98);box-shadow:0 18px 55px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.025);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform-origin:top right}
+.menu.ax-floating-menu button{height:34px;padding:0 10px;border-radius:6px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu.ax-floating-menu button:active{background:#202024}
+.menu.ax-floating-menu.menu-above{transform-origin:bottom right}
+</style>
 </head>
 <body>
 <div class="app">
@@ -78,6 +85,53 @@ window.addEventListener('click',()=>document.querySelectorAll('.menu.show').forE
 const project=new URLSearchParams(location.search).get('project');
 if(project&&safeName(project)){cwd=ROOT+'/'+project;}
 refresh();
+</script>
+<script>
+/* Robust floating menu controller. It works in the normal browser and inside the Android WebView. */
+(()=>{
+  let active=null,anchor=null,raf=0;
+  const all=()=>document.querySelectorAll('.menu.ax-floating-menu');
+  const close=()=>{if(!active)return;active.classList.remove('show','ax-floating-menu','menu-above');active.style.removeProperty('left');active.style.removeProperty('top');active.style.removeProperty('visibility');active=null;anchor=null};
+  const position=()=>{
+    if(!active||!anchor||!active.classList.contains('show'))return;
+    const r=anchor.getBoundingClientRect(),m=active.getBoundingClientRect(),gap=6,pad=8,vw=window.innerWidth,vh=window.innerHeight;
+    let left=r.right-m.width;
+    if(left<pad)left=pad;
+    if(left+m.width>vw-pad)left=Math.max(pad,vw-pad-m.width);
+    const below=r.bottom+gap,above=r.top-m.height-gap;
+    let top=below,aboveMode=false;
+    if(below+m.height>vh-pad&&above>=pad){top=above;aboveMode=true}
+    if(top<pad)top=pad;
+    if(top+m.height>vh-pad)top=Math.max(pad,vh-pad-m.height);
+    active.classList.toggle('menu-above',aboveMode);
+    active.style.left=Math.round(left)+'px';
+    active.style.top=Math.round(top)+'px';
+  };
+  const open=(button,menu)=>{
+    if(active===menu){close();return}
+    close();
+    anchor=button;active=menu;
+    active.classList.add('show','ax-floating-menu');
+    active.style.visibility='hidden';
+    requestAnimationFrame(()=>{position();active.style.visibility='visible';});
+  };
+  const bind=root=>{
+    root.querySelectorAll('.more').forEach(button=>{
+      if(button.dataset.axMenuBound==='1')return;
+      const menu=button.parentElement.querySelector('.menu');
+      if(!menu)return;
+      button.dataset.axMenuBound='1';
+      button.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open(button,menu)},true);
+    });
+  };
+  bind(document);
+  new MutationObserver(m=>m.forEach(x=>x.addedNodes.forEach(n=>{if(n.nodeType===1)bind(n)}))).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});
+  document.addEventListener('pointerdown',e=>{if(active&&!e.target.closest('.menu.ax-floating-menu')&&!e.target.closest('.more'))close()},{capture:true});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+  const reposition=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(position)};
+  window.addEventListener('resize',reposition,{passive:true});
+  document.querySelector('.content')?.addEventListener('scroll',reposition,{passive:true});
+})();
 </script>
 </body>
 </html>
