@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
-    <application android:theme="@style/AppTheme" android:label="Axilort Engine" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:allowBackup="true" android:supportsRtl="true" android:usesCleartextTraffic="true">
+    <application android:theme="@style/AppTheme" android:label="Axilort Engine" android:icon="@drawable/ic_launcher_logo" android:roundIcon="@drawable/ic_launcher_logo" android:allowBackup="true" android:supportsRtl="true" android:usesCleartextTraffic="true">
         <activity android:name=".MainActivity" android:screenOrientation="unspecified" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
