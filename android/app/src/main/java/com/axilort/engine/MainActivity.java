@@ -8,13 +8,14 @@ import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
     private WebView webView;
@@ -72,13 +73,12 @@ public class MainActivity extends Activity {
         box.setGravity(Gravity.CENTER);
         box.setBackgroundColor(Color.rgb(5,5,5));
 
-        TextView logo = new TextView(this);
-        logo.setText("A");
-        logo.setTextColor(Color.rgb(255,32,32));
-        logo.setTextSize(72);
-        logo.setTypeface(Typeface.DEFAULT_BOLD);
-        logo.setGravity(Gravity.CENTER);
-        box.addView(logo, new LinearLayout.LayoutParams(-1, 120));
+        ImageView logo = new ImageView(this);
+        logo.setImageResource(com.axilort.engine.R.drawable.axilort_logo);
+        logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, 180);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        box.addView(logo, lp);
 
         TextView title = new TextView(this);
         title.setText("AXILORT ENGINE");
