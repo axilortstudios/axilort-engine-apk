@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:theme="@style/AppTheme" android:label="Axilort Engine" android:icon="@drawable/ic_launcher_logo" android:roundIcon="@drawable/ic_launcher_logo" android:allowBackup="true" android:supportsRtl="true" android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity" android:screenOrientation="unspecified" android:exported="true">
+        <activity android:name=".MainActivity" android:screenOrientation="landscape" android:configChanges="orientation|screenSize|keyboardHidden" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
