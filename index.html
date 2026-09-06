@@ -1,1 +1,92 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#000000"><title>Axilort Engine</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}#viewer{position:fixed;inset:0;width:100%;height:100%;background:#000}#website{width:100%;height:100%;border:0;display:block;background:#000}#loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000}.bar{width:42px;height:3px;background:#141414;border-radius:9px;overflow:hidden}.bar:after{content:"";display:block;width:100%;height:100%;background:#e50914;animation:load .35s linear forwards}@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(0)}}@media(orientation:portrait){#viewer{width:100vh;height:100vw;left:50%;top:50%;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center}}</style></head><body><section id="viewer"><iframe id="website" src="home.html" allow="fullscreen; autoplay; clipboard-read; clipboard-write; camera; microphone; geolocation" allowfullscreen></iframe><div id="loading"><div class="bar"></div></div></section><script>const website=document.getElementById('website'),loading=document.getElementById('loading');website.addEventListener('load',()=>loading.style.display='none');try{if(screen.orientation?.lock)screen.orientation.lock('landscape').catch(()=>{})}catch(e){}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Axilort Engine</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+#viewer{position:fixed;inset:0;width:100%;height:100%;background:#000}
+#website{width:100%;height:100%;border:0;display:block;background:#000}
+@media(orientation:portrait){#viewer{width:100vh;height:100vw;left:50%;top:50%;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center}}
+</style>
+</head>
+<body>
+<section id="viewer"><iframe id="website" src="home.html" allow="fullscreen; autoplay; clipboard-read; clipboard-write; camera; microphone; geolocation" allowfullscreen></iframe></section>
+<script>
+const website=document.getElementById('website');
+function installFixes(){
+  let d;
+  try{d=website.contentDocument||website.contentWindow.document}catch(e){return}
+  if(!d)return;
+  const w=website.contentWindow;
+  const native=window.AxilortStorage||w.AxilortStorage||window.parent.AxilortStorage;
+  if(!native)return;
+  const style=d.createElement('style');
+  style.textContent=`
+    .menu{position:fixed!important;z-index:2147483647!important;display:none!important;min-width:150px!important;max-width:220px!important;pointer-events:auto!important;box-shadow:0 18px 60px rgba(0,0,0,.85)!important}
+    .menu.show{display:block!important}
+    .more{position:relative;z-index:2147483646!important}
+    .project-image{width:100%!important;height:92px!important;object-fit:cover!important;display:block!important;border-radius:10px 10px 0 0!important;background:#090909!important;border-bottom:1px solid #242426!important}
+    .project-cover{overflow:hidden!important}
+    .project-upload{display:flex;align-items:center;gap:8px;margin-top:9px}
+    .project-upload button{height:34px;border:1px solid #303034;border-radius:8px;background:#111;color:#eee;padding:0 11px;font-size:11px;font-weight:700}
+    .project-upload span{color:#777;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  `;
+  d.head.appendChild(style);
+  d.querySelectorAll('.menu').forEach(m=>{if(m.dataset.axilortFixed)return; m.dataset.axilortFixed='1';});
+  d.querySelectorAll('.more').forEach(btn=>{
+    if(btn.dataset.axilortMenu)return;
+    btn.dataset.axilortMenu='1';
+    btn.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      const menu=btn.parentElement&&btn.parentElement.querySelector('.menu');
+      if(!menu)return;
+      d.querySelectorAll('.menu.show').forEach(x=>{if(x!==menu)x.classList.remove('show')});
+      const r=btn.getBoundingClientRect();
+      menu.style.left=Math.max(6,Math.min(r.right-150,d.documentElement.clientWidth-156))+'px';
+      const below=r.bottom+6;
+      const above=r.top-6;
+      menu.style.top=(below+menu.offsetHeight<d.documentElement.clientHeight?below:Math.max(6,above-menu.offsetHeight))+'px';
+      menu.classList.add('show');
+    },true);
+  });
+  if((d.location.pathname||'').endsWith('projects.html'))installProjectFix(d,w,native);
+}
+function installProjectFix(d,w,native){
+  if(d.documentElement.dataset.axilortProjectsFixed)return;
+  d.documentElement.dataset.axilortProjectsFixed='1';
+  const area=d.getElementById('projectArea');
+  if(!area)return;
+  const readImage=(project)=>{
+    const names=['projects/'+project+'/.project-image.png','projects/'+project+'/.project-image.jpg','projects/'+project+'/.project-image.jpeg'];
+    for(const p of names){try{const b=native.readBase64(p);if(b)return 'data:image/'+(p.endsWith('.png')?'png':'jpeg')+';base64,'+b}catch(e){}}
+    return '';
+  };
+  const writeImage=(project,file)=>new Promise(resolve=>{
+    const fr=new FileReader();fr.onload=()=>{try{const img=new Image();img.onload=()=>{const c=d.createElement('canvas'),max=1400,scale=Math.min(1,max/img.width,max/img.height);c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);const data=c.toDataURL('image/jpeg',.88).split(',')[1];resolve(!!native.writeBase64('projects/'+project+'/.project-image.jpg',data))}catch(e){resolve(false)}};fr.onerror=()=>resolve(false);fr.readAsDataURL(file)});
+  });
+  const decorate=()=>{
+    d.querySelectorAll('.project-bar').forEach(bar=>{
+      if(bar.dataset.axilortImage)return;
+      const info=bar.querySelector('.project-info');
+      if(!info)return;
+      const name=(info.querySelector('strong')||{}).textContent?.trim();if(!name)return;
+      bar.dataset.axilortImage='1';
+      const wrap=d.createElement('div');wrap.className='project-cover';wrap.style.cssText='position:absolute;inset:0;pointer-events:none;border-radius:inherit;overflow:hidden;opacity:.28';
+      const src=readImage(name);if(src){const im=d.createElement('img');im.className='project-image';im.src=src;im.style.height='100%';im.style.border=0;wrap.appendChild(im);bar.prepend(wrap)}
+      bar.style.overflow='hidden';bar.style.isolation='isolate';
+      [info,bar.querySelector('.project-icon'),bar.querySelector('.more'),bar.querySelector('.menu')].forEach(x=>{if(x)x.style.position='relative';if(x)x.style.zIndex='2'});
+      const upload=d.createElement('button');upload.type='button';upload.textContent='Image';upload.className='project-image-button';upload.style.cssText='position:absolute;right:50px;bottom:7px;z-index:3;border:1px solid #303034;border-radius:7px;background:#0d0d0e;color:#eee;height:26px;padding:0 9px;font-size:9px;font-weight:700';
+      upload.onclick=ev=>{ev.stopPropagation();const input=d.createElement('input');input.type='file';input.accept='image/*';input.onchange=async()=>{if(input.files?.[0]){upload.textContent='Saving…';const ok=await writeImage(name,input.files[0]);upload.textContent=ok?'Image':'Retry';setTimeout(()=>upload.textContent='Image',900);if(ok)decorate()}};input.click()};bar.appendChild(upload);
+    });
+  };
+  const observer=new MutationObserver(()=>decorate());observer.observe(area,{childList:true,subtree:true});
+  setTimeout(decorate,50);setTimeout(decorate,400);setTimeout(decorate,1200);
+}
+website.addEventListener('load',()=>{setTimeout(installFixes,0);setTimeout(installFixes,300);setTimeout(installFixes,900)});
+try{if(screen.orientation?.lock)screen.orientation.lock('landscape').catch(()=>{})}catch(e){}
+</script>
+</body>
+</html>
